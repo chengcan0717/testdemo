@@ -21,7 +21,7 @@ function getDB(callback) {
 //collectionName 集合名称
 //select 查询条件
 //callback 查询后的回调函数的结果
-function findOne(collectionName,select,callback) {
+exports.findOne=(collectionName,select,callback)=>{
     //调用连接
     getDB((err,db)=>{
         if(err) {
@@ -38,4 +38,24 @@ function findOne(collectionName,select,callback) {
             })
         }
     })
-}
+};
+//select 查询条件
+//callback 查询后的回调函数的结果
+exports.insertOne=(collectionName,data,callback)=>{
+    //调用连接
+    getDB((err,db)=>{
+        if(err) {
+            callback(err);
+        }else{
+            //查询数据库中的数据并且只返回一条数据
+            db.collection(collectionName).insertOne(data,(error,docs)=>{
+                if(error){
+                    callback(err);
+                } else{
+                    callback(null,docs)
+                }
+
+            })
+        }
+    })
+};
