@@ -6,6 +6,7 @@ let url = 'mongodb://localhost:27017/itcast';
 //每一个crud都需要链接数据库
 function getDB(callback) {
     MongoClient.connect(url, function(err, db) {
+        console.log(err);
         //有错误先返回错误
        if(err){
             callback(err);
@@ -23,12 +24,16 @@ function getDB(callback) {
 //callback 查询后的回调函数的结果
 exports.findOne=(collectionName,select,callback)=>{
     //调用连接
+    console.log('1');
     getDB((err,db)=>{
+        console.log(2);
         if(err) {
             callback(err);
         }else{
+            console.log('3');
             //查询数据库中的数据并且只返回一条数据
             db.collection(collectionName).findOne(select,(error,docs)=>{
+                console.log(docs);
                 if(error){
                     callback(err);
                 } else{
@@ -37,6 +42,7 @@ exports.findOne=(collectionName,select,callback)=>{
 
             })
         }
+        db.close();
     })
 };
 //select 查询条件
