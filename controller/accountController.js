@@ -92,3 +92,27 @@ exports.register=(req,res)=>{
         res.send(data)
     })
 };
+
+//注册api
+exports.registerdata=(req,res)=>{
+     //注册
+    //username pwd
+    //通过用户名查询数据库 如果有返回值表示已经有该用户相反则可以注册
+    dbhelp.findOne("account",{"username":req.body.username},(err,data)=>{
+        if(!data){
+            //注册
+            dbhelp.insertOne("account",{"username":req.body.username,"pwd":req.body.pwd},(err,data)=>{
+                if(err){
+                    throw err;
+                    res.send("注册失败")
+                }else{
+                    res.send("注册成功")
+                }
+            })
+        }else{
+            //已经有该用户
+            res.send("用户名已存在，请重新换个用户名在注册")
+        }
+    })
+
+};

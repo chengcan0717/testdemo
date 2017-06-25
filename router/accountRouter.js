@@ -16,6 +16,7 @@ router.get('/login',accountController.getloginpage);
 router.get('/vcode',accountController.vcode);
 //注册
 router.get('/register',accountController.register);
+router.post('/registerdata',accountController.registerdata);
 
 
 //让外部能够访问
